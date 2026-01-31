@@ -19,8 +19,7 @@ class AppUtils {
   static Color earnDartIconColor = Colors.white;
 
 
-
-
-
+  static const TextStyle titleStyle = TextStyle(fontSize: 24, fontWeight: FontWeight.w600);
+  static const TextStyle subtitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
 }

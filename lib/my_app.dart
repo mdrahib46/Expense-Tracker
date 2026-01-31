@@ -1,5 +1,4 @@
-
-import 'package:expensetracker/expense_tracker/expence_tracker_app.dart';
+import 'package:expensetracker/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 
@@ -172,9 +171,7 @@ class MyApp extends StatelessWidget {
 
       ),
 
-      home: ExpenseTrackerApp(
-
-      ),
+      home: SplashScreen(),
     );
   }
 }
