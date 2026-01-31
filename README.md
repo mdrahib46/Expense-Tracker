@@ -34,6 +34,7 @@ A simple and user-friendly **Expense Tracker** built with **Flutter**. This app 
 - Clean and responsive UI.
 
 ---
+![Uploading Screenshot_20260131_161409.png…]()
 
 ## 📸 Screenshots
 
@@ -48,7 +49,7 @@ A simple and user-friendly **Expense Tracker** built with **Flutter**. This app 
 
 
 ### Add Transaction Modal
-![Ad<img width="992" height="968" alt="transection model" src="https://github.com/user-attachments/assets/2c30aacc-afec-42e0-a963-bb1c3882c9ee" />
+<img width="992" height="968" alt="transection model" src="https://github.com/user-attachments/assets/e00302f2-9849-49be-a99a-7cde23745784" />
 
 
 ---
