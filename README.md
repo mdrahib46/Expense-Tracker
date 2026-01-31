@@ -1,6 +1,3 @@
-Absolutely! Here's a **complete, detailed README.md** for your Expense Tracker app, following the style you started with, fully written and ready to use. You can just replace the `images/` folder with your screenshots.
-
-````markdown
 # Expense Tracker App
 
 A simple and user-friendly **Expense Tracker** built with **Flutter**. This app allows users to track their earnings, expenses, and balance in a clean and organized interface.
@@ -17,7 +14,7 @@ A simple and user-friendly **Expense Tracker** built with **Flutter**. This app 
 - [Folder Structure](#-folder-structure)
 - [Technologies](#-technologies)
 - [Future Improvements](#-future-improvements)
-- [License](#-license)
+
 
 ---
 
@@ -35,24 +32,19 @@ A simple and user-friendly **Expense Tracker** built with **Flutter**. This app 
 
 ---
 
-
 ## 📸 Screenshots
 
 ### Home Screen
-
+<img width="1547" height="3272" alt="Screenshot_20260131_163024" src="https://github.com/user-attachments/assets/c8c9a4b8-50fb-4ae5-a324-166d69e4c2f8" />
 
 ### Earnings Tab
-![Home Screen](https://github.com/mdrahib46/Expense-Tracker/blob/d7a6fb4d3cf2994a4243c42ee78e4fa06a9e2f06/Screenshot_20260131_163024.png)
-![Earnings](images/earnings.png)
-![Expenses](images/expenses.png)
-![Add Transaction](images/add_transaction.png)
+<img width="1547" height="3272" alt="Screenshot_20260131_163033" src="https://github.com/user-attachments/assets/6994f0d6-6e50-4d8b-88b7-77ec5429f47e" />
 
-### Expenses Tab
-<img width="1547" height="3272" alt="Screenshot_20260131_161435" src="https://github.com/user-attachments/assets/9e959001-b632-4285-8df0-a79370dda3ab" />
-
+### Add Expenses Tab
+<img width="1547" height="3272" alt="Screenshot_20260131_194028" src="https://github.com/user-attachments/assets/d832a844-d138-4884-abfc-2fcc25d2bd7f" />
 
 ### Add Transaction Modal
-<img width="992" height="968" alt="transection model" src="https://github.com/user-attachments/assets/e00302f2-9849-49be-a99a-7cde23745784" />
+<img width="1547" height="3272" alt="Screenshot_20260131_193919" src="https://github.com/user-attachments/assets/c40a31d2-a1ca-4d9d-9477-312f389e55b4" />
 
 
 ---
@@ -77,7 +69,7 @@ class TransactionModel {
     required this.type,
   });
 }
-````
+```
 
 ### 2️⃣ Transaction Tile Widget
 
@@ -161,35 +153,31 @@ class EarningScreen extends StatelessWidget {
 
 ### Prerequisites
 
-* Flutter SDK: [https://flutter.dev/docs/get-started/install](https://flutter.dev/docs/get-started/install)
-* Dart SDK (comes with Flutter)
-* Android Studio / VS Code
+- **Flutter SDK**: [https://flutter.dev/docs/get-started/install](https://flutter.dev/docs/get-started/install)
+- **Dart SDK** (comes with Flutter)
+- **Android Studio** / **VS Code**
 
 ### Installation
 
 1. Clone this repository:
-
-```bash
-git clone https://github.com/yourusername/expense_tracker.git
-```
+   ```bash
+   git clone https://github.com/yourusername/expense_tracker.git
+   ```
 
 2. Navigate to the project directory:
-
-```bash
-cd expense_tracker
-```
+   ```bash
+   cd expense_tracker
+   ```
 
 3. Install dependencies:
-
-```bash
-flutter pub get
-```
+   ```bash
+   flutter pub get
+   ```
 
 4. Run the app:
-
-```bash
-flutter run
-```
+   ```bash
+   flutter run
+   ```
 
 ---
 
@@ -200,10 +188,9 @@ flutter run
 3. View totals in the **Dashboard**.
 4. Switch tabs to see only **Earnings** or **Expenses**.
 5. Balance is automatically calculated as:
-
-```
-Balance = Total Earnings - Total Expenses
-```
+   ```
+   Balance = Total Earnings - Total Expenses
+   ```
 
 ---
 
@@ -227,17 +214,42 @@ lib/
 
 ## 🔧 Technologies
 
-* **Flutter** - UI Framework
-* **Dart** - Programming Language
-* **Intl** - For formatting dates
+- **Flutter** - UI Framework
+- **Dart** - Programming Language
+- **Intl** - For formatting dates
 
 ---
 
 ## 💡 Future Improvements
 
-* Edit/Delete transactions
-* Firebase or local database for persistence
-* Charts/Graphs for visualization
-* Monthly/Yearly filters
+- ✅ Edit/Delete transactions
+- ✅ Firebase or local database for persistence
+- ✅ Charts/Graphs for visualization
+- ✅ Monthly/Yearly filters
+- ✅ Category-based expense tracking
+- ✅ Export data to CSV/PDF
 
-```
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+---
+
+## 👨‍💻 Author
+
+**Your Name**
+- LinkedIn: [MD Monirujjaman Nahid](https://www.linkedin.com/in/rahib-in/)
+- WhatsApp: [Md Rahib](https://wa.me/message/CYTDI44PRL3WJ1)
+
+---
+
+## 🙏 Acknowledgments
+
+- Flutter Team for the amazing framework
+- Community contributors and supporters
+
+---
+
+**MD Rahib**
