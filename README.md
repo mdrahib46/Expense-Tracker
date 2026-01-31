@@ -33,14 +33,15 @@ A simple and user-friendly **Expense Tracker** built with **Flutter**. This app 
 ---
 
 ## 📸 Screenshots
-<div align="center">
+<div align="left">
   
-### Home Screen & Earnings Tab
+### Home Screen | Earnings Tab | Expense Tab | Add Transaction Dialogue 
 <img alt="Home Screen" src="https://github.com/user-attachments/assets/c8c9a4b8-50fb-4ae5-a324-166d69e4c2f8" width="300"/>
+&nbsp;&nbsp;&nbsp;&nbsp;
 <img alt="Earnings Tab" src="https://github.com/user-attachments/assets/6994f0d6-6e50-4d8b-88b7-77ec5429f47e" width="300"/>
-
-### Expenses Tab & Add Transaction Modal
+&nbsp;&nbsp;&nbsp;&nbsp;
 <img alt="Expenses Tab" src="https://github.com/user-attachments/assets/d832a844-d138-4884-abfc-2fcc25d2bd7f" width="300"/>
+&nbsp;&nbsp;&nbsp;&nbsp;
 <img alt="Add Transaction" src="https://github.com/user-attachments/assets/c40a31d2-a1ca-4d9d-9477-312f389e55b4" width="300"/>
 
 </div>
