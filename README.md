@@ -34,15 +34,18 @@ A simple and user-friendly **Expense Tracker** built with **Flutter**. This app 
 - Clean and responsive UI.
 
 ---
-![Uploading Screenshot_20260131_161409.png…]()
+
 
 ## 📸 Screenshots
 
 ### Home Screen
-<img width="1547" height="3272" alt="Screenshot_20260131_161409" src="https://github.com/user-attachments/assets/e10d4c54-41f7-4006-81dc-d1ee820e3a86" />
+
 
 ### Earnings Tab
-<img width="1547" height="3272" alt="Screenshot_20260131_161421" src="https://github.com/user-attachments/assets/8f8e1041-8222-4401-a2ac-d3510961a96a" />
+![Home Screen](lib/images/dashboard.png)
+![Earnings](images/earnings.png)
+![Expenses](images/expenses.png)
+![Add Transaction](images/add_transaction.png)
 
 ### Expenses Tab
 <img width="1547" height="3272" alt="Screenshot_20260131_161435" src="https://github.com/user-attachments/assets/9e959001-b632-4285-8df0-a79370dda3ab" />
