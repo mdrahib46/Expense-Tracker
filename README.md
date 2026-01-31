@@ -33,17 +33,17 @@ A simple and user-friendly **Expense Tracker** built with **Flutter**. This app 
 ---
 
 ## 📸 Screenshots
-### Home Screen
-<img alt="Screenshot_20260131_163024" src="https://github.com/user-attachments/assets/c8c9a4b8-50fb-4ae5-a324-166d69e4c2f8" width="300"/>
+<div align="center">
+  
+### Home Screen & Earnings Tab
+<img alt="Home Screen" src="https://github.com/user-attachments/assets/c8c9a4b8-50fb-4ae5-a324-166d69e4c2f8" width="300"/>
+<img alt="Earnings Tab" src="https://github.com/user-attachments/assets/6994f0d6-6e50-4d8b-88b7-77ec5429f47e" width="300"/>
 
-### Earnings Tab
-<img alt="Screenshot_20260131_163033" src="https://github.com/user-attachments/assets/6994f0d6-6e50-4d8b-88b7-77ec5429f47e" width="300"/>
+### Expenses Tab & Add Transaction Modal
+<img alt="Expenses Tab" src="https://github.com/user-attachments/assets/d832a844-d138-4884-abfc-2fcc25d2bd7f" width="300"/>
+<img alt="Add Transaction" src="https://github.com/user-attachments/assets/c40a31d2-a1ca-4d9d-9477-312f389e55b4" width="300"/>
 
-### Expenses Tab
-<img alt="Screenshot_20260131_194028" src="https://github.com/user-attachments/assets/d832a844-d138-4884-abfc-2fcc25d2bd7f" width="300"/>
-
-### Add Transaction Modal
-<img alt="Screenshot_20260131_193919" src="https://github.com/user-attachments/assets/c40a31d2-a1ca-4d9d-9477-312f389e55b4" width="300"/>
+</div>
 
 
 ---
