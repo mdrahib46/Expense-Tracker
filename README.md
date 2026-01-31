@@ -42,7 +42,7 @@ A simple and user-friendly **Expense Tracker** built with **Flutter**. This app 
 
 
 ### Earnings Tab
-![Home Screen](lib/images/dashboard.png)
+![Home Screen]([lib/images/dashboard.png](https://github.com/mdrahib46/Expense-Tracker/blob/d7a6fb4d3cf2994a4243c42ee78e4fa06a9e2f06/Screenshot_20260131_163024.png))
 ![Earnings](images/earnings.png)
 ![Expenses](images/expenses.png)
 ![Add Transaction](images/add_transaction.png)
