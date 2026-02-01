@@ -1,5 +1,7 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:expensetracker/expense_tracker/screens/login_screen.dart';
 import 'package:expensetracker/expense_tracker/utils/app_utils.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
@@ -11,7 +13,12 @@ class RegistrationScreen extends StatefulWidget {
 }
 
 class _RegistrationScreenState extends State<RegistrationScreen> {
-  bool _isShowPass = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  bool _isShowPassword = false;
+  bool _isShowConfirmPassword = false;
+  bool _isLoading = false;
+
   final TextEditingController _fullNameTEController = TextEditingController();
   final TextEditingController _emailTEController = TextEditingController();
   final TextEditingController _mobileTEController = TextEditingController();
@@ -19,178 +26,226 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
   final TextEditingController _confirmPassTEController =
       TextEditingController();
 
-  bool _isShowPassword = false;
+  Future<void> _createUser() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _isLoading = true);
+
+    try {
+      final UserCredential userCredential = await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(
+            email: _emailTEController.text.trim(),
+            password: _passwordTEController.text.trim(),
+          );
+
+      final User? user = userCredential.user;
+
+      if (user != null) {
+        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
+          'uid': user.uid,
+          'name': _fullNameTEController.text.trim(),
+          'mobileNumber': _mobileTEController.text.trim(),
+          'email': _emailTEController.text.trim(),
+          'createdAt': FieldValue.serverTimestamp(),
+        });
+
+        if (!mounted) return;
+
+        setState(() => _isLoading = false);
+
+        AppUtils.showCustomSnackBar(
+          context: context,
+          message: "Account successfully created",
+          isSuccess: true,
+        );
+
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (_) => const LoginScreen()),
+          (route) => false,
+        );
+      }
+    } on FirebaseAuthException catch (e) {
+      if (!mounted) return;
+
+      setState(() => _isLoading = false);
+
+      AppUtils.showCustomSnackBar(
+        context: context,
+        message: e.message ?? 'Registration failed',
+        isSuccess: false,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.all(16),
+          child: Form(
+            key: _formKey,
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Lottie.asset(
                   'assets/lottie/login.json',
-                  fit: BoxFit.contain,
+                  width: 240,
                   repeat: false,
-                  width: 320,
                 ),
                 Text('Create an Account !', style: AppUtils.titleStyle),
-                Text(
+                const SizedBox(height: 8),
+                const Text(
                   'Start tracking your expenses and take control of your finances today.',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 12),
+                const SizedBox(height: 16),
+
+                /// Full Name
                 TextFormField(
                   controller: _fullNameTEController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
                     hintText: 'Full Name',
                   ),
-                  validator: (value) {
-                    if (value!.isEmpty || value.trim().isEmpty) {
-                      return 'Enter your name';
-                    }
-                    return null;
-                  },
+                  validator: (value) => value == null || value.trim().isEmpty
+                      ? 'Enter your name'
+                      : null,
                 ),
                 const SizedBox(height: 12),
+
+                /// Email
                 TextFormField(
                   controller: _emailTEController,
                   keyboardType: TextInputType.emailAddress,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.alternate_email_sharp),
+                  decoration: const InputDecoration(
+                    prefixIcon: Icon(Icons.alternate_email),
                     hintText: 'Email',
                   ),
                   validator: (value) {
-                    if (value!.isEmpty || value.trim().isEmpty) {
-                      return "Enter your email...!";
+                    if (value == null || value.trim().isEmpty) {
+                      return 'Enter your email';
                     }
-                    final regexp = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
-                    if (!regexp.hasMatch(value)) {
-                      return "Enter a valid email...!";
+                    final regex = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+                    if (!regex.hasMatch(value.trim())) {
+                      return 'Enter a valid email';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 12),
+
+                /// Mobile
                 TextFormField(
                   controller: _mobileTEController,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.number,
                   maxLength: 11,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.phone),
                     hintText: 'Mobile',
-                    counterText: ' ',
+                    counterText: '',
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return 'Enter your phone number';
                     }
-
-                    final regex = RegExp(r'^(?:\+88)?01[3-9]\d{8}$');
-
+                    final regex = RegExp(r'^01[3-9]\d{8}$');
                     if (!regex.hasMatch(value.trim())) {
-                      return 'Enter a valid mobile number';
+                      return 'Enter a valid BD mobile number';
                     }
-
                     return null;
                   },
                 ),
                 const SizedBox(height: 12),
+
+                /// Password
                 TextFormField(
                   controller: _passwordTEController,
-                  obscureText: !_isShowPass,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  obscureText: !_isShowPassword,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.password),
+                    prefixIcon: const Icon(Icons.lock),
                     hintText: 'Password',
                     suffixIcon: IconButton(
+                      icon: Icon(
+                        _isShowPassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
                       onPressed: () {
-                        _isShowPass = !_isShowPass;
-                        setState(() {});
+                        setState(() => _isShowPassword = !_isShowPassword);
                       },
-                      icon: _isShowPass
-                          ? Icon(Icons.remove_red_eye_outlined)
-                          : Icon(Icons.remove_red_eye),
                     ),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty || value.trim().isEmpty) {
-                      return 'Enter you password';
+                    if (value == null || value.isEmpty) {
+                      return 'Enter your password';
                     }
                     if (value.length < 6) {
-                      return 'Password length should be greater then or equal to 6';
+                      return 'Password must be at least 6 characters';
                     }
                     return null;
                   },
                 ),
                 const SizedBox(height: 12),
+
+                /// Confirm Password
                 TextFormField(
                   controller: _confirmPassTEController,
-                  obscureText: !_isShowPass,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  obscureText: !_isShowConfirmPassword,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.password),
+                    prefixIcon: const Icon(Icons.lock),
                     hintText: 'Confirm Password',
                     suffixIcon: IconButton(
+                      icon: Icon(
+                        _isShowConfirmPassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                      ),
                       onPressed: () {
-                        _isShowPass = !_isShowPass;
-                        setState(() {});
+                        setState(
+                          () =>
+                              _isShowConfirmPassword = !_isShowConfirmPassword,
+                        );
                       },
-                      icon: _isShowPass
-                          ? Icon(Icons.remove_red_eye_outlined)
-                          : Icon(Icons.remove_red_eye),
                     ),
                   ),
                   validator: (value) {
-                    if (value!.isEmpty || value.trim().isEmpty) {
-                      return 'Enter you password !';
+                    if (value == null || value.isEmpty) {
+                      return 'Confirm your password';
                     }
-                    if (value.length < 6) {
-                      return 'Password must be at least 6 characters !';
-                    }
-
-                    if(value != _passwordTEController.text){
-                      return 'Passwords do not match...!';
+                    if (value != _passwordTEController.text) {
+                      return 'Passwords do not match';
                     }
                     return null;
                   },
                 ),
-                const SizedBox(height: 16),
+                const SizedBox(height: 20),
+
+                /// Button
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    onPressed: () {},
-                    child: Text('Sign up'),
+                    onPressed: _isLoading ? null : _createUser,
+                    child: _isLoading
+                        ? const CircularProgressIndicator()
+                        : const Text('Sign Up'),
                   ),
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(
-                      "Already have an account ?",
-                      style: TextStyle(fontWeight: FontWeight.w600),
-                    ),
+                    const Text('Already have an account?'),
                     TextButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => LoginScreen(),
+                            builder: (_) => const LoginScreen(),
                           ),
                         );
-                        setState(() {});
                       },
-                      child: Text('Sign In'),
+                      child: const Text('Sign In'),
                     ),
                   ],
                 ),

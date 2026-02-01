@@ -22,4 +22,32 @@ class AppUtils {
   static const TextStyle titleStyle = TextStyle(fontSize: 24, fontWeight: FontWeight.w600);
   static const TextStyle subtitleStyle = TextStyle(fontSize: 16, fontWeight: FontWeight.w400);
 
+
+
+  static void showCustomSnackBar({
+    required BuildContext context,
+    required String message,
+    bool isSuccess = true, // true = success (green), false = error (red)
+  }) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          message,
+          style: const TextStyle(
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        backgroundColor: isSuccess ? Colors.green : Colors.red.shade300,
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        margin: const EdgeInsets.all(16),
+        duration: const Duration(seconds: 3),
+      ),
+    );
+  }
+
+
 }
