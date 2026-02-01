@@ -1,5 +1,9 @@
+import 'package:expensetracker/expense_tracker/screens/login_screen.dart';
+import 'package:expensetracker/expense_tracker/screens/registration_screen.dart';
 import 'package:expensetracker/splash_screen.dart';
 import 'package:flutter/material.dart';
+
+import 'expense_tracker/expence_tracker_app.dart';
 
 
 class MyApp extends StatelessWidget {
@@ -9,6 +13,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.light,
 

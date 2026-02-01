@@ -1,3 +1,4 @@
+import 'package:expensetracker/expense_tracker/expence_tracker_app.dart';
 import 'package:expensetracker/expense_tracker/screens/registration_screen.dart';
 import 'package:expensetracker/expense_tracker/utils/app_utils.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +12,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  bool _isShowPass = false;
+  bool _isShowPass = true;
+  final TextEditingController _emailTEController = TextEditingController();
+  final TextEditingController _passTEController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,14 +44,30 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
+                  controller: _emailTEController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.alternate_email_sharp),
                     hintText: 'Email',
                   ),
+                  validator: (value){
+                    if(value!.isEmpty || value.trim().isEmpty){
+                      return "Enter your email...!";
+                    }
+                    final regexp = RegExp(r'^[^@\s]+@[^@\s]+\.[^@\s]+$');
+                    if(!regexp.hasMatch(value)){
+                      return "Enter a valid email...!";
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 12),
                 TextFormField(
-                  obscureText: true,
+
+                  controller: _passTEController,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  obscureText: _isShowPass ? true: false,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.password),
                     hintText: 'Password',
@@ -60,12 +80,24 @@ class _LoginScreenState extends State<LoginScreen> {
                           ? Icon(Icons.remove_red_eye_outlined)
                           : Icon(Icons.remove_red_eye),
                     ),
+
                   ),
+                  validator: (value){
+                    if(value!.isEmpty || value.trim().isEmpty){
+                      return 'Enter you password';
+                    }
+                    if(value.length < 6){
+                      return 'Password length should be greater then or equal to 6';
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 16),
                 SizedBox(
                   width: double.infinity,
-                  child: ElevatedButton(onPressed: () {}, child: Text('Sign In')),
+                  child: ElevatedButton(onPressed: () {
+                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> const ExpenseTrackerApp()), (route)=> false);
+                  }, child: Text('Sign In')),
                 ),
                 TextButton(onPressed: (){}, child: Text('Forgot Password ?')),
                 Row(

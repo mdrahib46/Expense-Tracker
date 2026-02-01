@@ -5,8 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'model/transaction_model.dart';
 
-
-
 class ExpenseTrackerApp extends StatefulWidget {
   const ExpenseTrackerApp({super.key});
 
@@ -42,11 +40,19 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
           centerTitle: true,
           title: Text(
             'Expense Tracker',
-            style: Theme.of(context)
-                .textTheme
-                .titleLarge!
-                .copyWith(fontWeight: FontWeight.w600),
+            style: Theme.of(
+              context,
+            ).textTheme.titleMedium!.copyWith(fontWeight: FontWeight.w600),
           ),
+          actions: [
+            Card(
+              shape: RoundedRectangleBorder(borderRadius: BorderRadiusGeometry.circular(4)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Text('Md Rahib'),
+              ),
+            ),
+          ],
           bottom: const TabBar(
             tabs: [
               Tab(text: 'Dashboard'),
@@ -57,9 +63,9 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
         ),
         body: TabBarView(
           children: [
-            HomeScreen(transactions: transactions,),
-            EarningScreen(earnings:  earnings,),
-            ExpenseScreen(expenses: expenses,),
+            HomeScreen(transactions: transactions),
+            EarningScreen(earnings: earnings),
+            ExpenseScreen(expenses: expenses),
           ],
         ),
       ),
@@ -142,8 +148,7 @@ class _ExpenseTrackerAppState extends State<ExpenseTrackerApp> {
               child: ElevatedButton(
                 onPressed: () {
                   final title = _titleController.text.trim();
-                  final amount =
-                  double.tryParse(_amountController.text.trim());
+                  final amount = double.tryParse(_amountController.text.trim());
 
                   if (title.isEmpty || amount == null || amount <= 0) {
                     ScaffoldMessenger.of(context).showSnackBar(
