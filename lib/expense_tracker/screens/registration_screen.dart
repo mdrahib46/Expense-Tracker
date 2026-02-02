@@ -34,25 +34,28 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
 
     try {
       // Create user in Firebase Auth
-      final UserCredential userCredential = await FirebaseAuth.instance
+      final userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(
           email: _emailTEController.text.trim(),
           password: _passwordTEController.text.trim());
 
-      final User? user = userCredential.user;
+      final user = userCredential.user;
 
-      if (user != null) {
-        // Save user info in Firestore
-        await FirebaseFirestore.instance.collection('users').doc(user.uid).set({
-          'uid': user.uid,
-          'name': _fullNameTEController.text.trim(),
-          'mobileNumber': _mobileTEController.text.trim(),
-          'email': _emailTEController.text.trim(),
-          'createdAt': FieldValue.serverTimestamp(),
-        });
+      if (user == null) throw Exception("User creation failed");
 
-        if (!mounted) return;
+      final Map<String, dynamic> userData = {
+        'uid': user.uid,
+        'name': _fullNameTEController.text.trim(),
+        'mobileNumber': _mobileTEController.text.trim(),
+        'email': _emailTEController.text.trim(),
+        'createdAt': FieldValue.serverTimestamp(),
+      };
+      // Save user info in Firestore
+      await FirebaseFirestore.instance.collection('users').doc(user.uid).set(userData);
 
+      print(userData);
+
+      if (mounted) {
         AppUtils.showCustomSnackBar(
           context: context,
           message: "Account successfully created",
@@ -66,23 +69,25 @@ class _RegistrationScreenState extends State<RegistrationScreen> {
         );
       }
     } on FirebaseAuthException catch (e) {
-      if (!mounted) return;
-      AppUtils.showCustomSnackBar(
-        context: context,
-        message: e.message ?? 'Registration failed',
-        isSuccess: false,
-      );
-    } catch (e) {
-      if (!mounted) return;
-      AppUtils.showCustomSnackBar(
-        context: context,
-        message: 'Something went wrong. Try again.',
-        isSuccess: false,
-      );
-    } finally {
-      if (mounted) setState(() => _isLoading = false);
+      if (mounted) {
+        AppUtils.showCustomSnackBar(
+          context: context,
+          message: e.message ?? 'Registration failed',
+          isSuccess: false,
+        );
+      }
+    } on FirebaseException catch (e) {
+      // catch Firestore exception separately
+      if (mounted) {
+        AppUtils.showCustomSnackBar(
+          context: context,
+          message: e.message ?? 'Firestore error. Try again.',
+          isSuccess: false,
+        );
+      }
     }
   }
+
 
   @override
   void dispose() {
